@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}About Expert System - AI Mini Project{% endblock %}
+
+{% block content %}
+<div class="main-container py-4">
+
+    <!-- About Header -->
+    <div class="clean-card mb-4 p-4 text-center">
+        <span class="hero-tag">Academic Guide &bull; </span>
+        <h1 class="h3 fw-bold text-dark mb-2">About the Rule-Based Expert System</h1>
+        <p class="text-muted small max-w-700 mx-auto mb-0">
+            A comprehensive reference on the architecture, knowledge representation, forward-chaining inference,
+            and college viva examination concepts implemented in this project.
+        </p>
+    </div>
+
+    <!-- 5 Core Academic Definitions (As Requested) -->
+    <div class="row g-3 mb-4">
+        <!-- 1. What is an Expert System? -->
+        <div class="col-md-6 col-lg-4">
+            <div class="clean-card h-100 p-4 mb-0">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="feature-icon-box mb-0" style="width: 36px; height: 36px; font-size: 1rem;">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h2 class="h6 fw-bold text-dark mb-0">What is an Expert System?</h2>
+                </div>
+                <p class="text-muted small mb-0">
+                    An <strong>Expert System</strong> is a branch of Artificial Intelligence designed to emulate the 
+                    decision-making capability of a human specialist in a specific domain using formal knowledge rules 
+                    and logical inference.
+                </p>
+            </div>
+        </div>
+
+        <!-- 2. What is a Knowledge Base? -->
+        <div class="col-md-6 col-lg-4">
+            <div class="clean-card h-100 p-4 mb-0">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="feature-icon-box mb-0" style="width: 36px; height: 36px; font-size: 1rem;">
+                        <i class="bi bi-database"></i>
+                    </div>
+                    <h2 class="h6 fw-bold text-dark mb-0">What is a Knowledge Base?</h2>
+                </div>
+                <p class="text-muted small mb-0">
+                    The <strong>Knowledge Base</strong> stores domain facts, career requirements, and heuristic logic. 
+                    In this project, it is located in <code class="text-dark">rules.py</code> and comprises 
+                    <strong>84 structured production rules</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. What are IF–THEN Rules? -->
+        <div class="col-md-6 col-lg-4">
+            <div class="clean-card h-100 p-4 mb-0">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="feature-icon-box mb-0" style="width: 36px; height: 36px; font-size: 1rem;">
+                        <i class="bi bi-code-slash"></i>
+                    </div>
+                    <h2 class="h6 fw-bold text-dark mb-0">What are IF–THEN Rules?</h2>
+                </div>
+                <p class="text-muted small mb-0">
+                    <strong>IF–THEN rules</strong> (production rules) connect antecedents to consequents: 
+                    <code>IF condition THEN conclusion</code>. Each rule carries points (+10 strong, +5 medium, +2 basic).
+                </p>
+            </div>
+        </div>
+
+        <!-- 4. What is Forward Chaining? -->
+        <div class="col-md-6 col-lg-6">
+            <div class="clean-card h-100 p-4 mb-0">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="feature-icon-box mb-0" style="width: 36px; height: 36px; font-size: 1rem;">
+                        <i class="bi bi-arrow-right-circle"></i>
+                    </div>
+                    <h2 class="h6 fw-bold text-dark mb-0">What is Forward Chaining?</h2>
+                </div>
+                <p class="text-muted small mb-0">
+                    <strong>Forward Chaining</strong> is a data-driven reasoning strategy. It begins with known facts 
+                    (student inputs in Working Memory) and searches the Knowledge Base for rules whose IF conditions 
+                    match, firing them to reach recommendations.
+                </p>
+            </div>
+        </div>
+
+        <!-- 5. What is an Inference Engine? -->
+        <div class="col-md-12 col-lg-6">
+            <div class="clean-card h-100 p-4 mb-0">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="feature-icon-box mb-0" style="width: 36px; height: 36px; font-size: 1rem;">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                    <h2 class="h6 fw-bold text-dark mb-0">What is an Inference Engine?</h2>
+                </div>
+                <p class="text-muted small mb-0">
+                    The <strong>Inference Engine</strong> executes the reasoning cycle. Implemented in 
+                    <code class="text-dark">inference_engine.py</code>, it pattern-matches user facts, fires matching rules, 
+                    resolves conflicts, normalizes scores, and returns the top 3 careers.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Flow Diagram (As Requested) -->
+    <div class="clean-card mb-4">
+        <h2 class="h5 fw-bold text-dark mb-3 text-center">Project Inference Architecture Flow</h2>
+
+        <div class="p-4 bg-light rounded border text-center max-w-600 mx-auto">
+            <div class="p-2 bg-white rounded border fw-bold text-dark mb-2">User Input</div>
+            <div class="text-secondary my-1"><i class="bi bi-arrow-down fs-5"></i></div>
+            <div class="p-2 bg-white rounded border fw-bold text-dark mb-2">Knowledge Base</div>
+            <div class="text-secondary my-1"><i class="bi bi-arrow-down fs-5"></i></div>
+            <div class="p-2 bg-white rounded border fw-bold text-dark mb-2">IF–THEN Rules</div>
+            <div class="text-secondary my-1"><i class="bi bi-arrow-down fs-5"></i></div>
+            <div class="p-2 bg-white rounded border fw-bold text-dark mb-2">Inference Engine</div>
+            <div class="text-secondary my-1"><i class="bi bi-arrow-down fs-5"></i></div>
+            <div class="p-2 bg-white rounded border fw-bold text-primary">Career Recommendation</div>
+        </div>
+    </div>
+
+    <!-- Comparison Table: Rule-Based Expert System vs Machine Learning -->
+    <div class="clean-card mb-4">
+        <h2 class="h5 fw-bold text-dark mb-2">Rule-Based Expert System vs Machine Learning</h2>
+        <p class="text-muted small mb-3">Key technical differences for college viva presentations:</p>
+
+        <div class="table-responsive">
+            <table class="academic-table table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Dimension</th>
+                        <th style="width: 37.5%;">Rule-Based Expert System (This Project)</th>
+                        <th style="width: 37.5%;">Machine Learning / Neural Networks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-bold">Knowledge Source</td>
+                        <td>Explicit human-crafted IF–THEN rules</td>
+                        <td>Learned statistical patterns from large datasets</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Explainability</td>
+                        <td class="text-success fw-medium">100% Explainable (Fired rules logged)</td>
+                        <td class="text-danger fw-medium">Black box (Complex mathematical weights)</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Data Requirement</td>
+                        <td>Zero training datasets needed</td>
+                        <td>Requires thousands of labeled training samples</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Determinism</td>
+                        <td>Deterministic (Same input &rarr; same output)</td>
+                        <td>Probabilistic (Subject to statistical variance)</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold">Knowledge Updates</td>
+                        <td>Add or edit a rule in <code>rules.py</code></td>
+                        <td>Requires dataset collection and model retraining</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Viva Examination Q&A Cheat Sheet -->
+    <div class="clean-card mb-4">
+        <h2 class="h5 fw-bold text-dark mb-3">College Mini Project Viva Questions & Answers</h2>
+
+        <div class="d-flex flex-column gap-3">
+            <div class="p-3 bg-light rounded border">
+                <div class="fw-bold text-dark small mb-1">Q1: Why was forward chaining chosen over backward chaining?</div>
+                <div class="text-muted small">
+                    <strong>Answer:</strong> Forward chaining is data-driven. We start with known student data (interests, skills, preferences) and reason forward to discover suitable careers. Backward chaining is goal-driven, which is suitable when testing a specific single hypothesis.
+                </div>
+            </div>
+
+            <div class="p-3 bg-light rounded border">
+                <div class="fw-bold text-dark small mb-1">Q2: How are career scores and percentages calculated?</div>
+                <div class="text-muted small">
+                    <strong>Answer:</strong> Each matching rule contributes confidence points: Strong (+10), Medium (+5), or Basic (+2). The percentage is computed as: <code>(Score Obtained / Maximum Possible Score) * 100</code>. Careers are ranked descending by score.
+                </div>
+            </div>
+
+            <div class="p-3 bg-light rounded border">
+                <div class="fw-bold text-dark small mb-1">Q3: Where in the codebase is the Knowledge Base and Inference Engine?</div>
+                <div class="text-muted small">
+                    <strong>Answer:</strong> The Knowledge Base is defined in <code>rules.py</code> (containing <code>KNOWLEDGE_BASE_RULES</code> and <code>CAREER_METADATA</code>). The Inference Engine is implemented in <code>inference_engine.py</code> in the <code>InferenceEngine</code> class.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

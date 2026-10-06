@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Career Guidance Expert System{% endblock %}
+
+{% block content %}
+<div class="main-container">
+
+    <!-- Professional Hero Section -->
+    <div class="hero-box">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="hero-tag">Artificial Intelligence   Mini Project &bull; Rule-Based AI</span>
+                <h1 class="hero-heading">Career Guidance Expert System</h1>
+                <p class="hero-text">
+                    Discover suitable career paths based on your interests, skills, work preferences and career goals.
+                    Built on classical <strong>Rule-Based Expert System</strong> principles with explicit IF–THEN 
+                    knowledge representation and forward-chaining inference.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{{ url_for('assessment') }}" class="btn-navy">
+                        <i class="bi bi-play-circle"></i>
+                        <span>Start Career Assessment</span>
+                    </a>
+                    <a href="{{ url_for('about') }}" class="btn-outline-navy">
+                        <i class="bi bi-info-circle"></i>
+                        <span>Learn About Expert System</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center d-none d-lg-block">
+                <div class="p-4 bg-light rounded border text-center">
+                    <i class="bi bi-compass text-secondary" style="font-size: 4rem;"></i>
+                    <div class="fw-bold mt-2 text-dark">Decision Support System</div>
+                    <div class="small text-muted">12 Careers &bull; 84 Rules</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4 Core Feature Cards (As Requested) -->
+    <div class="mb-5">
+        <div class="row g-3">
+            <!-- Feature 1 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="bi bi-cpu"></i>
+                    </div>
+                    <h3 class="feature-title">Rule-Based Recommendations</h3>
+                    <p class="feature-desc">Recommendations are generated using IF–THEN expert rules.</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="bi bi-person-check"></i>
+                    </div>
+                    <h3 class="feature-title">Personalized Guidance</h3>
+                    <p class="feature-desc">Personalized Recommendations based on your interests and skills.</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <h3 class="feature-title">Explainable Results</h3>
+                    <p class="feature-desc">Every recommendation includes the reasons behind the result.</p>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-md-6 col-lg-3">
+                <div class="feature-card">
+                    <div class="feature-icon-box">
+                        <i class="bi bi-signpost-split"></i>
+                    </div>
+                    <h3 class="feature-title">Career Roadmap</h3>
+                    <p class="feature-desc">Get suggested skills and learning areas for your selected career.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Flow Diagram Section -->
+    <div class="clean-card mb-5">
+        <div class="clean-card-header text-center">
+            <h2 class="h5 fw-bold text-dark mb-1">Expert System Architecture Flow</h2>
+            <p class="small text-muted mb-0">How the forward-chaining inference engine processes student input</p>
+        </div>
+
+        <div class="flow-diagram-wrapper">
+            <div class="row g-2 align-items-center text-center">
+                <div class="col-12 col-md">
+                    <div class="flow-step-node">
+                        <div class="flow-step-number">Step 1</div>
+                        <div class="flow-step-title">User Input</div>
+                        <div class="small text-muted">Interests, Skills & Preferences</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-auto flow-arrow">
+                    <i class="bi bi-arrow-right d-none d-md-block"></i>
+                    <i class="bi bi-arrow-down d-md-none"></i>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="flow-step-node">
+                        <div class="flow-step-number">Step 2</div>
+                        <div class="flow-step-title">Knowledge Base</div>
+                        <div class="small text-muted">84 IF–THEN Rules</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-auto flow-arrow">
+                    <i class="bi bi-arrow-right d-none d-md-block"></i>
+                    <i class="bi bi-arrow-down d-md-none"></i>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="flow-step-node">
+                        <div class="flow-step-number">Step 3</div>
+                        <div class="flow-step-title">Inference Engine</div>
+                        <div class="small text-muted">Forward-Chaining Matching</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-auto flow-arrow">
+                    <i class="bi bi-arrow-right d-none d-md-block"></i>
+                    <i class="bi bi-arrow-down d-md-none"></i>
+                </div>
+                <div class="col-12 col-md">
+                    <div class="flow-step-node">
+                        <div class="flow-step-number">Step 4</div>
+                        <div class="flow-step-title">Recommendation</div>
+                        <div class="small text-muted">Top 3 Careers + Explanation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 12 Career Categories Grid -->
+    <div class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="h5 fw-bold text-dark mb-1">Supported Career Categories</h2>
+                <p class="small text-muted mb-0">The expert system evaluates student readiness for 12 technology career domains.</p>
+            </div>
+            <a href="{{ url_for('assessment') }}" class="btn-outline-navy py-1 px-3 small">
+                Take Assessment <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-3">
+            {% for cid, c in careers.items() %}
+            <div class="col-md-6 col-lg-4">
+                <div class="career-overview-card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <div class="career-overview-icon">
+                            <i class="bi {{ c.icon }}"></i>
+                        </div>
+                        <div>
+                            <h3 class="career-overview-title">{{ c.name }}</h3>
+                            <span class="badge bg-light text-secondary border small" style="font-size: 0.7rem;">Domain #{{ loop.index }}</span>
+                        </div>
+                    </div>
+                    <p class="career-overview-desc">{{ c.description }}</p>
+                    <div class="border-top pt-2 mt-auto">
+                        <div class="d-flex flex-wrap gap-1">
+                            {% for sk in c.required_skills[:4] %}
+                            <span class="badge bg-light text-dark border small" style="font-weight: 500; font-size: 0.72rem;">{{ sk }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

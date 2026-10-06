@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Past Results - Career Guidance Expert System{% endblock %}
+
+{% block content %}
+<div class="main-container py-4">
+
+    <!-- History Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 pb-3 mb-4 border-bottom">
+        <div>
+            <h1 class="h4 fw-bold text-dark mb-1">Assessment Records & Audit History</h1>
+            <p class="text-muted small mb-0">Review previously evaluated career assessments stored in SQLite database.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('assessment') }}" class="btn-navy py-1 px-3 small">
+                <i class="bi bi-plus-circle me-1"></i> New Assessment
+            </a>
+        </div>
+    </div>
+
+    <!-- Summary Stats Strip -->
+    <div class="row g-3 mb-4">
+        <div class="col-sm-6 col-lg-3">
+            <div class="clean-card p-3 mb-0">
+                <div class="text-muted small text-uppercase fw-semibold" style="font-size: 0.72rem;">Total Assessments</div>
+                <div class="h4 fw-bold text-dark mb-0">{{ stats.total_assessments }}</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="clean-card p-3 mb-0">
+                <div class="text-muted small text-uppercase fw-semibold" style="font-size: 0.72rem;">Database Engine</div>
+                <div class="h6 fw-bold text-primary mb-0 mt-1">SQLite3 Local</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="clean-card p-3 mb-0">
+                <div class="text-muted small text-uppercase fw-semibold" style="font-size: 0.72rem;">Rule Base</div>
+                <div class="h6 fw-bold text-dark mb-0 mt-1">84 Production Rules</div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <div class="clean-card p-3 mb-0">
+                <div class="text-muted small text-uppercase fw-semibold" style="font-size: 0.72rem;">Inference Method</div>
+                <div class="h6 fw-bold text-dark mb-0 mt-1">Forward Chaining</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="clean-card p-4">
+        <h2 class="h6 fw-bold text-dark mb-3">Assessment Records</h2>
+
+        {% if assessments %}
+        <div class="table-responsive">
+            <table class="academic-table table align-middle">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Student Name</th>
+                        <th style="width: 20%;">Date</th>
+                        <th style="width: 25%;">Top Career</th>
+                        <th style="width: 15%;">Match Score</th>
+                        <th style="width: 15%;" class="text-end">View Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in assessments %}
+                    <tr>
+                        <td>
+                            <div class="fw-semibold text-dark">{{ a.student_name }}</div>
+                            <div class="text-muted" style="font-size: 0.75rem;">{{ a.course }} &bull; {{ a.education_level }}</div>
+                        </td>
+                        <td class="text-secondary small">
+                            {{ a.assessment_date }}
+                        </td>
+                        <td>
+                            <span class="badge badge-navy py-1 px-2">
+                                {{ a.top_career }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="fw-bold text-dark">{{ a.top_percentage }}%</span>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ url_for('results', assessment_id=a.assessment_id) }}" class="btn-outline-navy py-1 px-2" style="font-size: 0.78rem;">
+                                View Result <i class="bi bi-chevron-right ms-1"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-inbox text-muted fs-1 mb-2 d-block"></i>
+            <h3 class="h6 text-dark mb-1">No assessments recorded yet</h3>
+            <p class="text-muted small mb-3">Complete the assessment form to evaluate and record career recommendations.</p>
+            <a href="{{ url_for('assessment') }}" class="btn-navy py-1 px-3 small">
+                Start Career Assessment
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

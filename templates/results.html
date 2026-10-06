@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}Results - Career Guidance Expert System{% endblock %}
+
+{% block content %}
+<div class="main-container py-4">
+
+    <!-- Top Results Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 pb-3 mb-4 border-bottom">
+        <div>
+            <h1 class="h4 fw-bold text-dark mb-1">Your Career Guidance Results</h1>
+            <p class="text-muted small mb-0">
+                Assessment evaluated for <strong>{{ result.student_info.name }}</strong> &bull; 
+                {{ result.student_info.course }} ({{ result.student_info.year_of_study }})
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <button onclick="window.print()" class="btn-outline-navy py-1 px-3 small">
+                <i class="bi bi-printer me-1"></i> Print / Save PDF
+            </button>
+            <a href="{{ url_for('assessment') }}" class="btn-navy py-1 px-3 small">
+                <i class="bi bi-arrow-repeat me-1"></i> Retake Assessment
+            </a>
+        </div>
+    </div>
+
+    {% set top = result.top_recommendation %}
+
+    <!-- ===================================================================== -->
+    <!-- TOP CAREER RECOMMENDATION (CARD)                                      -->
+    <!-- ===================================================================== -->
+    <div class="results-hero-card">
+        <div class="row align-items-center g-4 mb-4">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="badge badge-navy px-2 py-1 small">Primary Recommendation #1</span>
+                    <span class="text-muted small">&bull; Evaluated: {{ result.inference_trace.timestamp }}</span>
+                </div>
+                <div class="small text-muted text-uppercase fw-bold mb-1">Recommended Career</div>
+                <h2 class="display-6 fw-bold text-dark mb-2">{{ top.name }}</h2>
+                <p class="text-muted mb-0 small leading-relaxed">
+                    {{ top.description }}
+                </p>
+            </div>
+
+            <!-- Clean Score Box -->
+            <div class="col-lg-4">
+                <div class="score-display-box">
+                    <div class="small text-muted text-uppercase fw-bold mb-1">Match Score</div>
+                    <div class="score-number">{{ top.match_percentage }}%</div>
+                    <div class="score-progress-clean">
+                        <div class="bar" style="width: {{ top.match_percentage }}%;"></div>
+                    </div>
+                    <div class="small text-muted mt-2">
+                        Confidence: {{ top.score }} / {{ top.max_score }} Points
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row g-4">
+            <!-- 1. Why This Career Matches You -->
+            <div class="col-lg-6">
+                <div class="p-3 bg-light rounded border h-100">
+                    <h3 class="h6 fw-bold text-dark mb-2">
+                        <i class="bi bi-check2-circle text-success me-1"></i> Why This Career Matches You
+                    </h3>
+                    <p class="text-muted small mb-2">Reasons inferred directly from matched Knowledge Base rules:</p>
+                    <ul class="explanation-list">
+                        {% for reason in top.explanations %}
+                        <li>
+                            <i class="bi bi-check2"></i>
+                            <span>{{ reason }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 2. Skills Matrix: Possessed vs To Improve -->
+            <div class="col-lg-6">
+                <div class="p-3 bg-light rounded border h-100">
+                    <h3 class="h6 fw-bold text-dark mb-3">
+                        <i class="bi bi-card-checklist text-primary me-1"></i> Technical Skills Gap Analysis
+                    </h3>
+
+                    <!-- Skills You Have -->
+                    <div class="mb-3">
+                        <div class="small fw-bold text-secondary text-uppercase mb-2">
+                            Skills You Already Have
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if top.skills_you_have %}
+                                {% for s in top.skills_you_have %}
+                                <span class="badge badge-success-clean py-1 px-2">
+                                    {{ s.skill }} ({{ s.level }})
+                                </span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="text-muted small fst-italic">No prior required skills reported. Ready to begin training.</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Skills to Improve -->
+                    <div>
+                        <div class="small fw-bold text-secondary text-uppercase mb-2">
+                            Skills You Should Learn / Improve
+                        </div>
+                        <div class="d-flex flex-wrap gap-2">
+                            {% if top.skills_to_learn %}
+                                {% for s in top.skills_to_learn %}
+                                <span class="badge badge-warning-clean py-1 px-2">
+                                    &bull; {{ s.skill }}
+                                </span>
+                                {% endfor %}
+                            {% else %}
+                                <span class="badge badge-success-clean py-1 px-2">All core prerequisite skills met!</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Learning Roadmap -->
+            <div class="col-12">
+                <div class="p-3 bg-light rounded border">
+                    <h3 class="h6 fw-bold text-dark mb-3">
+                        <i class="bi bi-diagram-3 text-secondary me-1"></i> Suggested Learning Roadmap
+                    </h3>
+
+                    <div class="row g-3">
+                        {% for phase in top.learning_roadmap %}
+                        <div class="col-md-4">
+                            <div class="roadmap-box">
+                                <div class="roadmap-phase-title">{{ phase.phase }}</div>
+                                <p class="roadmap-phase-desc">{{ phase.desc }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Possible Job Roles -->
+            <div class="col-12">
+                <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between p-3 bg-light rounded border gap-2">
+                    <div class="small fw-bold text-dark">
+                        <i class="bi bi-briefcase me-1 text-primary"></i> Possible Job Roles:
+                    </div>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for role in top.possible_job_roles %}
+                        <span class="badge bg-white text-dark border py-1 px-2 small">
+                            {{ role }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================================== -->
+    <!-- OTHER SUITABLE CAREERS (RANK #2 & #3)                                 -->
+    <!-- ===================================================================== -->
+    <div class="mb-4">
+        <h2 class="h5 fw-bold text-dark mb-3">Other Suitable Careers</h2>
+
+        <div class="row g-3">
+            {% for other in result.other_recommendations %}
+            <div class="col-md-6">
+                <div class="clean-card h-100 p-4 mb-0">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                            <span class="badge bg-light text-secondary border small mb-1">Rank #{{ loop.index + 1 }} Alternative</span>
+                            <h3 class="h6 fw-bold text-dark mb-1">{{ other.name }}</h3>
+                        </div>
+                        <div class="text-end">
+                            <div class="h5 fw-bold text-primary mb-0">{{ other.match_percentage }}%</div>
+                            <span class="text-muted" style="font-size: 0.72rem;">Match</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted small mb-3">
+                        {{ other.description }}
+                    </p>
+
+                    <div class="p-2 bg-light rounded border small mb-3">
+                        <strong class="text-dark">Key Match Reason:</strong>
+                        <div class="text-secondary mt-1">
+                            {% if other.explanations %}
+                                &bull; {{ other.explanations[0] }}
+                            {% else %}
+                                Aligned with general computing and problem-solving preferences.
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-1 mt-auto">
+                        {% for role in other.possible_job_roles[:3] %}
+                        <span class="badge bg-light text-secondary border small" style="font-size: 0.72rem;">{{ role }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- ===================================================================== -->
+    <!-- COMPLETE CAREER RANKINGS TABLE (COLLAPSIBLE)                          -->
+    <!-- ===================================================================== -->
+    <div class="clean-card mb-4">
+        <div class="d-flex justify-content-between align-items-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#allRankingsCollapse" aria-expanded="false">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-bar-chart text-primary"></i>
+                <h3 class="h6 fw-bold text-dark mb-0">View Complete Rankings for All 12 Careers</h3>
+            </div>
+            <i class="bi bi-chevron-down text-secondary"></i>
+        </div>
+
+        <div class="collapse mt-3" id="allRankingsCollapse">
+            <div class="table-responsive">
+                <table class="academic-table table align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Rank</th>
+                            <th style="width: 40%;">Career Category</th>
+                            <th style="width: 25%;">Confidence Score</th>
+                            <th style="width: 15%;">Match %</th>
+                            <th style="width: 10%;" class="text-end">Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in result.all_rankings %}
+                        <tr>
+                            <td class="fw-bold">#{{ c.rank }}</td>
+                            <td class="fw-medium text-dark">{{ c.name }}</td>
+                            <td>{{ c.score }} / {{ c.max_score }} pts</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height: 6px;">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ c.match_percentage }}%;"></div>
+                                    </div>
+                                    <span class="small fw-semibold">{{ c.match_percentage }}%</span>
+                                </div>
+                            </td>
+                            <td class="text-end text-muted">{{ c.fired_rules_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================================== -->
+    <!-- INFERENCE TRACE (COLLAPSIBLE FOR VIVA DEMONSTRATION)                  -->
+    <!-- ===================================================================== -->
+    <div class="clean-card mb-4">
+        <div class="d-flex justify-content-between align-items-center cursor-pointer" data-bs-toggle="collapse" data-bs-target="#inferenceTraceCollapse" aria-expanded="false">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-terminal text-secondary"></i>
+                <div>
+                    <h3 class="h6 fw-bold text-dark mb-0">Inference Engine Trace & Audit Log</h3>
+                    <div class="text-muted" style="font-size: 0.75rem;">Useful for college mini project viva demonstration</div>
+                </div>
+            </div>
+            <i class="bi bi-chevron-down text-secondary"></i>
+        </div>
+
+        <div class="collapse mt-3" id="inferenceTraceCollapse">
+            <div class="p-3 bg-light rounded border small mb-3">
+                <div><strong>Inference Mode:</strong> Forward-Chaining Production Rules</div>
+                <div><strong>Total Rules Evaluated:</strong> {{ result.inference_trace.total_rules }}</div>
+                <div><strong>Total Rules Fired:</strong> {{ result.inference_trace.fired_rules }}</div>
+            </div>
+
+            <div class="small fw-bold text-dark mb-2">Fired Rules for {{ top.name }}:</div>
+            <div class="d-flex flex-column gap-2">
+                {% for r in top.fired_rules %}
+                <div class="p-2 bg-light rounded border small">
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong class="text-primary">{{ r.rule_id }}</strong>
+                        <span class="badge bg-white text-dark border">+{{ r.weight }} Points</span>
+                    </div>
+                    <div class="text-secondary small font-monospace">{{ r.condition_desc }}</div>
+                    <div class="text-dark small mt-1">&rarr; {{ r.explanation }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
